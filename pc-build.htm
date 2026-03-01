@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تركيب الحاسوب | منصف تيك</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #0f172a;
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.7;
+        }
+
+        .nav-standard {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: white; border-bottom: 1px solid #edf2f7;
+        }
+
+        .my-custom-logo {
+            height: 54px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.45;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+
+        .article-hero-img {
+            width: 100%;
+            height: 45vh;
+            overflow: hidden;
+            border-radius: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .article-content p {
+            margin-bottom: 1.4rem;
+            font-size: 1.05rem;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* ── VIGNETTES COMPOSANTS ── */
+        .comp-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.875rem;
+        }
+
+        @media (max-width: 640px) {
+            .comp-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .comp-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem 0.75rem;
+            text-align: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .comp-card:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(59,130,246,0.1);
+        }
+        .comp-card .comp-icon {
+            width: 44px;
+            height: 44px;
+            background: #0f172a;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.6rem;
+            font-size: 1.1rem;
+            color: white;
+            transition: background 0.25s;
+        }
+        .comp-card:hover .comp-icon {
+            background: #2563eb;
+        }
+        .comp-card .comp-name {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #0f172a;
+            display: block;
+        }
+        .comp-card .comp-desc {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* Tooltip hover hint */
+        .comp-card .comp-hint {
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 0.5rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+        .comp-card .comp-hint::after {
+            content: '';
+            position: absolute;
+            top: 100%; left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #0f172a;
+        }
+        .comp-card:hover .comp-hint {
+            opacity: 1;
+        }
+
+        /* ── MODAL ── */
+        .comp-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .comp-modal-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .comp-modal {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 480px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.3s ease;
+        }
+        .comp-modal-overlay.show .comp-modal {
+            transform: translateY(0) scale(1);
+        }
+        .comp-modal-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #e2e8f0;
+        }
+        .comp-modal-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+        }
+        .comp-modal-body {
+            padding: 1.5rem;
+            direction: rtl;
+            text-align: right;
+        }
+        .comp-modal-badge {
+            font-size: 9px;
+            background: #dbeafe;
+            color: #2563eb;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .comp-modal-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 0.75rem;
+        }
+        .comp-modal-text {
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .comp-modal-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.25rem;
+        }
+        .comp-modal-spec {
+            font-size: 0.68rem;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 3px 10px;
+            border-radius: 0.5rem;
+        }
+        .comp-modal-close {
+            width: 100%;
+            padding: 0.65rem;
+            background: #0f172a;
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .comp-modal-close:hover { background: #1e293b; }
+
+        /* ── ACCORDÉON ── */
+        .accordion-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .accordion-item.open {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(59,130,246,0.08);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            background: #f8fafc;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .accordion-item.open .accordion-header {
+            background: #eff6ff;
+        }
+
+        .acc-number {
+            width: 44px;
+            height: 44px;
+            background: #0f172a;
+            color: white;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+        .accordion-item.open .acc-number {
+            background: #2563eb;
+        }
+
+        .acc-title-wrap {
+            flex: 1;
+        }
+        .acc-badge {
+            font-size: 9px;
+            background: #e2e8f0;
+            color: #64748b;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 3px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+        .accordion-item.open .acc-badge {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .acc-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .acc-chevron {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            transition: transform 0.35s ease, color 0.2s;
+            flex-shrink: 0;
+        }
+        .accordion-item.open .acc-chevron {
+            transform: rotate(180deg);
+            color: #2563eb;
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s ease, padding 0.3s ease;
+            padding: 0 1.5rem;
+        }
+        .accordion-body.open {
+            max-height: 2000px;
+            padding: 1.25rem 1.5rem 1.5rem;
+        }
+
+        .acc-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.875rem;
+            margin-bottom: 1.25rem;
+            background: #e2e8f0;
+        }
+
+        .tip-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 0.875rem;
+            padding: 0.875rem 1.1rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.65rem;
+            align-items: flex-start;
+        }
+        .tip-box i {
+            color: #16a34a;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        .tip-box p {
+            font-size: 0.88rem !important;
+            color: #166534 !important;
+            margin: 0 !important;
+        }
+
+        .warn-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 0.875rem;
+            padding: 0.875rem 1.1rem;
+            margin-top: 0.75rem;
+            display: flex;
+            gap: 0.65rem;
+            align-items: flex-start;
+        }
+        .warn-box i {
+            color: #ea580c;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        .warn-box p {
+            font-size: 0.88rem !important;
+            color: #9a3412 !important;
+            margin: 0 !important;
+        }
+
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+        .tool-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 3px 10px;
+            border-radius: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body class="antialiased pt-24">
+
+    <!-- NAV -->
+    <nav class="nav-standard">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.htm">
+                    <img src="logo.png" alt="منصف تيك" class="my-custom-logo">
+                </a>
+            </div>
+            <div class="hidden md:flex items-center space-x-reverse space-x-8 font-bold text-sm">
+                <a href="index.htm#news" class="hover:text-blue-600">الأخبار</a>
+                <a href="pc-build.htm" class="text-blue-600">تركيب الحاسوب</a>
+                <a href="index.htm#buying-guide" class="hover:text-blue-600">دليل الشراء</a>
+                <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-lg">إشترك</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 mt-12 mb-24">
+
+        <!-- BREADCRUMB -->
+        <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6 font-bold uppercase tracking-widest">
+            <a href="index.htm" class="hover:text-blue-600">الرئيسية</a>
+            <i class="fa-solid fa-chevron-left text-[8px]"></i>
+            <span class="text-blue-600">تركيب الحاسوب</span>
+        </nav>
+
+        <!-- HEADER -->
+        <header class="mb-10">
+            <span class="bg-blue-100 text-blue-700 text-[11px] font-black px-3 py-1 rounded-md uppercase">دليل تعليمي</span>
+            <h1 class="main-title mt-4 mb-6">كيف تركب حاسوبك بنفسك؟</h1>
+            <div class="flex items-center gap-4 text-slate-400 text-xs border-t pt-6 border-slate-100">
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>2026</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>10 دقائق للقراءة</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>4 خطوات</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- HERO IMAGE -->
+        <div class="article-hero-img mb-12">
+            <img src="montage-hero.jpg" alt="تركيب الحاسوب" class="w-full h-full object-cover">
+        </div>
+
+        <!-- INTRO -->
+        <div class="article-content mb-14">
+            <p>تركيب حاسوب شخصي من الصفر ليس بالأمر الصعب كما يتصوره الكثيرون. مع الأدوات المناسبة وبعض الصبر، يمكنك بناء جهاز احترافي يناسب احتياجاتك تماماً وبتكلفة أقل من شراء جهاز جاهز. في هذا الدليل الشامل، نأخذك خطوة بخطوة عبر المراحل الأربع الأساسية: من اختيار القطع وحتى الاختبار النهائي.</p>
+        </div>
+
+        <!-- ════════════════════════════════════ -->
+        <!-- SECTION : قائمة المكونات - VIGNETTES -->
+        <!-- ════════════════════════════════════ -->
+        <section class="mb-16">
+            <h2 class="text-xl font-black mb-2 flex items-center gap-3">
+                <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+                مكونات الحاسوب الأساسية
+            </h2>
+            <p class="text-sm text-slate-400 mb-6">كل ما تحتاجه لبناء حاسوبك من الصفر</p>
+
+            <div class="comp-grid">
+
+                <div class="comp-card" onclick="openModal('cpu')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <span class="comp-name">المعالج — CPU</span>
+                    <span class="comp-desc">Intel / AMD</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('mb')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-server"></i></div>
+                    <span class="comp-name">اللوحة الأم</span>
+                    <span class="comp-desc">Motherboard</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('ram')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-memory"></i></div>
+                    <span class="comp-name">ذاكرة الوصول</span>
+                    <span class="comp-desc">RAM — DDR4/DDR5</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('gpu')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-display"></i></div>
+                    <span class="comp-name">بطاقة الرسومات</span>
+                    <span class="comp-desc">GPU — NVIDIA/AMD</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('ssd')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-hard-drive"></i></div>
+                    <span class="comp-name">وحدة التخزين</span>
+                    <span class="comp-desc">SSD NVMe / SATA</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('psu')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <span class="comp-name">مصدر الطاقة</span>
+                    <span class="comp-desc">PSU — 80+ Bronze</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('cooler')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-wind"></i></div>
+                    <span class="comp-name">نظام التبريد</span>
+                    <span class="comp-desc">CPU Cooler / AIO</span>
+                </div>
+
+                <div class="comp-card" onclick="openModal('case')">
+                    <span class="comp-hint">انقر للتفاصيل ←</span>
+                    <div class="comp-icon"><i class="fa-solid fa-box-open"></i></div>
+                    <span class="comp-name">هيكل الجهاز</span>
+                    <span class="comp-desc">Case / Tower</span>
+                </div>
+
+            </div>
+
+            <!-- ── MODAL COMPOSANT ── -->
+            <div class="comp-modal-overlay" id="comp-modal-overlay" onclick="closeModal(event)">
+                <div class="comp-modal" id="comp-modal">
+                    <div id="modal-img-wrap"></div>
+                    <div class="comp-modal-body">
+                        <span class="comp-modal-badge" id="modal-badge">مكون</span>
+                        <div class="comp-modal-title" id="modal-title"></div>
+                        <p class="comp-modal-text" id="modal-text"></p>
+                        <div class="comp-modal-specs" id="modal-specs"></div>
+                        <button class="comp-modal-close" onclick="closeModalBtn()">إغلاق ✕</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ════════════════════════ -->
+        <!-- SECTION : 4 ACCORDÉONS  -->
+        <!-- ════════════════════════ -->
+        <section class="mb-4">
+            <h2 class="text-xl font-black mb-2 flex items-center gap-3">
+                <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+                الخطوات الأربع للتركيب
+            </h2>
+            <p class="text-sm text-slate-400 mb-8">انقر على كل خطوة لقراءة التفاصيل الكاملة</p>
+        </section>
+
+        <div class="space-y-4" id="accordion">
+
+            <!-- ══ ÉTAPE 1 ══ -->
+            <div class="accordion-item open" data-acc="1">
+                <div class="accordion-header" onclick="toggleAcc(1)">
+                    <div class="acc-number">1</div>
+                    <div class="acc-title-wrap">
+                        <span class="acc-badge">الخطوة الأولى</span>
+                        <div class="acc-title">إختيار القطع المناسبة</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down acc-chevron"></i>
+                </div>
+                <div class="accordion-body open" id="body-1">
+                    <img src="step1-components.jpg" alt="إختيار القطع" class="acc-img">
+                    <div class="article-content">
+                        <p>
+                            تُعدّ مرحلة اختيار القطع من أهم مراحل تجميع الحاسوب، لأن أي خطأ في التوافق بين المكونات سيكلفك وقتاً ومالاً. لذا يجب أن تبدأ بتحديد هدفك بوضوح: هل تريد حاسوباً للألعاب؟ للتصميم الجرافيكي؟ لتحرير الفيديو؟ أم للاستخدام المكتبي اليومي؟ بناءً على هذا الهدف تحدد الميزانية ثم تبدأ في اختيار المكونات.
+                        </p>
+                        <p>
+                            <strong>المعالج (CPU) :</strong> هو قلب الجهاز. عليك الاختيار بين Intel و AMD حسب الميزانية والاستخدام. تأكد من أن المعالج يدعم نفس Socket الموجود في اللوحة الأم — مثلاً Intel LGA1700 أو AMD AM5. المعالجات ذات الأنوية الكثيرة (8 نوى وما فوق) هي الأنسب للمهام الثقيلة.
+                        </p>
+                        <p>
+                            <strong>اللوحة الأم (Motherboard) :</strong> هي العمود الفقري الذي يوصل كل شيء ببعضه. اختر لوحة تدعم معالجك وذاكرتك، وتوفر عدد الفتحات PCIe وUSB الذي تحتاجه. توجد ثلاثة أحجام رئيسية: ATX (الكاملة)، Micro-ATX، و Mini-ITX.
+                        </p>
+                        <p>
+                            <strong>الذاكرة العشوائية (RAM) :</strong> الحد الأدنى الموصى به اليوم هو 16 جيجابايت. إن كنت تعمل في مجال المونتاج أو الألعاب الحديثة فاختر 32 جيجابايت. تأكد من نوع الذاكرة — DDR4 أو DDR5 — حسب ما تدعمه اللوحة الأم. اشترِ دائماً الذاكرة على شكل كيتات ثنائية (Dual Channel) لأداء أفضل.
+                        </p>
+                        <p>
+                            <strong>بطاقة الرسومات (GPU) :</strong> للألعاب والتصميم هي أهم قطعة في الجهاز. توجد بطاقات NVIDIA (سلسلة RTX) وAMD (سلسلة RX). تأكد من أن مصدر الطاقة يكفي لتشغيلها، وأن الهيكل يتسع لأبعادها.
+                        </p>
+                        <p>
+                            <strong>وحدة التخزين (SSD) :</strong> احرص على اختيار SSD من نوع NVMe M.2 لسرعة تحميل فائقة، وليس SATA التقليدي. 500 جيجابايت كحد أدنى لنظام التشغيل، و1 تيرابايت للاستخدام المريح.
+                        </p>
+                        <p>
+                            <strong>مصدر الطاقة (PSU) :</strong> لا تقتصد في اختياره. احسب مجموع استهلاك كل قطعة ثم أضف هامش 20-30٪. اختر دائماً مصدر طاقة معتمد 80+ Bronze على الأقل. مصادر الطاقة الرخيصة المجهولة قد تحرق جهازك بالكامل.
+                        </p>
+                    </div>
+                    <div class="tip-box">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <p>استخدم موقع <strong>PCPartPicker</strong> مجاناً للتحقق من توافق جميع القطع قبل الشراء، وحساب استهلاك الطاقة الإجمالي تلقائياً.</p>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">CPU</span>
+                        <span class="tool-tag">Motherboard</span>
+                        <span class="tool-tag">RAM DDR4/DDR5</span>
+                        <span class="tool-tag">GPU</span>
+                        <span class="tool-tag">SSD NVMe</span>
+                        <span class="tool-tag">PSU 80+</span>
+                        <span class="tool-tag">PCPartPicker</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ ÉTAPE 2 ══ -->
+            <div class="accordion-item" data-acc="2">
+                <div class="accordion-header" onclick="toggleAcc(2)">
+                    <div class="acc-number">2</div>
+                    <div class="acc-title-wrap">
+                        <span class="acc-badge">الخطوة الثانية</span>
+                        <div class="acc-title">التجميع والتركيب الفني</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down acc-chevron"></i>
+                </div>
+                <div class="accordion-body" id="body-2">
+                    <img src="step2-assembly.jpg" alt="التجميع والتركيب" class="acc-img">
+                    <div class="article-content">
+                        <p>
+                            قبل أي شيء، احرص على تفريغ الكهرباء الساكنة من جسمك بلمس سطح معدني مؤرض، أو باستخدام سوار مضاد للإلكتروستاتيك. الكهرباء الساكنة تستطيع تدمير قطعك الثمينة في لحظة. ضع اللوحة الأم على غلافها الكرتوني العازل أثناء العمل عليها خارج الهيكل.
+                        </p>
+                        <p>
+                            <strong>تركيب المعالج (CPU) :</strong> افتح مزلاج socket اللوحة الأم برفق. أمسك المعالج من حوافه فقط ولا تلمس أطراف الاتصال أبداً. اضبط اتجاهه عبر السهم الصغير المنقوش في الزاوية، ثم ضعه بدون ضغط — يجب أن يسقط في مكانه وحده. أغلق المزلاج بحزم حتى تسمع صوت طقطقة.
+                        </p>
+                        <p>
+                            <strong>مادة التبريد الحرارية (Thermal Paste) :</strong> ضع كمية صغيرة من معجون التبريد — بحجم حبة أرز أو نقطة صغيرة — في وسط المعالج. لا تفرط في الكمية. ثم ثبت برج التبريد أو المروحة فوقه محكماً بالمسامير المخصصة.
+                        </p>
+                        <p>
+                            <strong>تركيب ذاكرة RAM :</strong> انظر دليل اللوحة الأم لمعرفة الفتحات الصحيحة لـ Dual Channel (عادةً الفتحتان A2 وB2). اضغط الذاكرة بقوة حتى تسمع صوت تثبيت من الجانبين.
+                        </p>
+                        <p>
+                            <strong>تجهيز الهيكل وتركيب اللوحة الأم :</strong> ركب الـ I/O Shield (واقهة المنافذ الخلفية) في الهيكل أولاً قبل أي شيء. ثم ضع الـ Standoffs (المسامير الرافعة) في الأماكن الصحيحة، وأدخل اللوحة الأم محاذياً منافذها مع الـ I/O Shield. ثبتها بالمسامير المخصصة.
+                        </p>
+                        <p>
+                            <strong>تركيب SSD M.2 :</strong> أدخل SSD في فتحة M.2 بزاوية 30 درجة، ثم ادفعه للأسفل وثبته بالمسمار الصغير.
+                        </p>
+                        <p>
+                            <strong>تركيب بطاقة الرسومات :</strong> أزل لسانَي الحماية من الهيكل المقابلَين لفتحة PCIe x16. أدخل بطاقة الرسومات بثبات حتى تسمع صوت تثبيت المزلاج. وصّل كبلات الطاقة PCIe من مصدر الطاقة إليها.
+                        </p>
+                        <p>
+                            <strong>توصيل مصدر الطاقة والأسلاك :</strong> ثبت PSU في الهيكل ووصّل الكبلات: 24 Pin للوحة الأم، 8 Pin للمعالج، وكبلات SATA أو Molex الأخرى. نظّم الأسلاك خلف لوحة الهيكل (Cable Management) لتحسين تدفق الهواء وجمالية التركيب.
+                        </p>
+                    </div>
+                    <div class="warn-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p>لا تشغّل الجهاز مطلقاً قبل التأكد من وصل كبل الطاقة 8-Pin الخاص بالمعالج — كثيراً ما يُنسى وهو الأكثر أهمية.</p>
+                    </div>
+                    <div class="tip-box">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <p>قبل وضع اللوحة الأم في الهيكل، جرّب تشغيل الجهاز على سطح خارجياً لاختبار أساسي سريع (POST Test) للتأكد من عمل جميع القطع.</p>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Thermal Paste</span>
+                        <span class="tool-tag">PCIe x16</span>
+                        <span class="tool-tag">M.2 NVMe</span>
+                        <span class="tool-tag">Cable Management</span>
+                        <span class="tool-tag">24-Pin ATX</span>
+                        <span class="tool-tag">Dual Channel</span>
+                        <span class="tool-tag">I/O Shield</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ ÉTAPE 3 ══ -->
+            <div class="accordion-item" data-acc="3">
+                <div class="accordion-header" onclick="toggleAcc(3)">
+                    <div class="acc-number">3</div>
+                    <div class="acc-title-wrap">
+                        <span class="acc-badge">الخطوة الثالثة</span>
+                        <div class="acc-title">تثبيت نظام التشغيل</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down acc-chevron"></i>
+                </div>
+                <div class="accordion-body" id="body-3">
+                    <img src="step3-os.jpg" alt="تثبيت نظام التشغيل" class="acc-img">
+                    <div class="article-content">
+                        <p>
+                            بعد تركيب الجهاز وتشغيله للمرة الأولى، يجب أن تظهر شاشة BIOS/UEFI تلقائياً. هذا يعني أن الجهاز يعمل بشكل صحيح. إن لم تظهر أي صورة على الشاشة، راجع توصيلات الذاكرة والمعالج وكبل الشاشة.
+                        </p>
+                        <p>
+                            <strong>تحضير فلاشة الإقلاع (Bootable USB) :</strong> على حاسوب آخر، حمّل أداة <strong>Rufus</strong> (مجانية) وملف ISO لنظام Windows من الموقع الرسمي لمايكروسوفت، أو أي توزيعة Linux كـ Ubuntu أو Linux Mint. أدخل فلاشة USB لا تقل عن 8 جيجابايت وابدأ عملية الحرق — لا تقاطع العملية.
+                        </p>
+                        <p>
+                            <strong>إعدادات BIOS :</strong> ادخل إلى BIOS بالضغط على F2 أو Delete أو F12 لحظة تشغيل الجهاز (حسب اللوحة الأم). في BIOS، توجه إلى قسم Boot وغيّر أولوية الإقلاع لتضع فلاشة USB في المرتبة الأولى. احرص أيضاً على تفعيل XMP/EXPO لضمان عمل الذاكرة بسرعتها الأصلية المدوّنة على العلبة.
+                        </p>
+                        <p>
+                            <strong>تثبيت Windows 11 :</strong> أعد تشغيل الجهاز وهو سيقلع من الفلاشة. اتبع مراحل التثبيت: اختر لغة العرض، اقبل شروط الترخيص، ثم اختر <em>"تثبيت مخصص"</em> (Custom Install) وحدد SSD الخاص بك كوجهة. ستستغرق العملية من 10 إلى 25 دقيقة حسب سرعة جهازك.
+                        </p>
+                        <p>
+                            <strong>تثبيت التعريفات (Drivers) :</strong> هذه من أهم مراحل ما بعد التثبيت. ابدأ بتعريف بطاقة الرسومات من موقع NVIDIA أو AMD مباشرة. ثم تعريف اللوحة الأم من موقع الشركة المصنعة (ASUS، MSI، Gigabyte…). استخدم Windows Update لتثبيت باقي التعريفات العامة.
+                        </p>
+                        <p>
+                            <strong>التحديثات الأمنية :</strong> فور الانتهاء من التثبيت، قم بتشغيل Windows Update وثبّت جميع التحديثات المتاحة. هذا يضمن حماية جهازك وأداءه المثالي منذ اليوم الأول.
+                        </p>
+                    </div>
+                    <div class="tip-box">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <p>فعّل <strong>XMP أو EXPO</strong> في BIOS مباشرةً بعد التركيب — بدونه ستعمل ذاكرتك بالسرعة الافتراضية الأبطأ وليس بسرعتها المُعلنة على العلبة.</p>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">BIOS / UEFI</span>
+                        <span class="tool-tag">Rufus</span>
+                        <span class="tool-tag">Bootable USB</span>
+                        <span class="tool-tag">Windows 11</span>
+                        <span class="tool-tag">Drivers GPU</span>
+                        <span class="tool-tag">XMP / EXPO</span>
+                        <span class="tool-tag">Windows Update</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ ÉTAPE 4 ══ -->
+            <div class="accordion-item" data-acc="4">
+                <div class="accordion-header" onclick="toggleAcc(4)">
+                    <div class="acc-number">4</div>
+                    <div class="acc-title-wrap">
+                        <span class="acc-badge">الخطوة الرابعة</span>
+                        <div class="acc-title">الاختبارات والإعداد النهائي</div>
+                    </div>
+                    <i class="fa-solid fa-chevron-down acc-chevron"></i>
+                </div>
+                <div class="accordion-body" id="body-4">
+                    <img src="step4-testing.jpg" alt="الاختبارات" class="acc-img">
+                    <div class="article-content">
+                        <p>
+                            مبروك لقد انتهيت من التركيب والتثبيت! لكن لا تعتبر العمل منتهياً حتى تجري مجموعة من الاختبارات للتأكد من أن كل شيء يعمل بشكل صحيح ومستقر. هذه المرحلة تكشف عن أي مشكلة قبل أن تتفاقم.
+                        </p>
+                        <p>
+                            <strong>التحقق من التعرف على القطع :</strong> نزّل وشغّل برنامج <strong>CPU-Z</strong> للتحقق من أن المعالج والذاكرة واللوحة الأم معرَّفة بشكل صحيح وأن الذاكرة تعمل بسرعتها الأصلية (XMP). شغّل <strong>GPU-Z</strong> للتحقق من بطاقة الرسومات وأنها تعمل في وضع PCIe x16 الكامل.
+                        </p>
+                        <p>
+                            <strong>مراقبة درجات الحرارة :</strong> استخدم برنامج <strong>HWMonitor</strong> أو <strong>MSI Afterburner</strong> لمتابعة درجات حرارة المعالج وبطاقة الرسومات والقرص الصلب أثناء الراحة وأثناء التحميل. درجة حرارة المعالج في الوضع الاعتيادي يجب أن تكون بين 30 و50 درجة مئوية.
+                        </p>
+                        <p>
+                            <strong>اختبار ضغط المعالج (CPU Stress Test) :</strong> شغّل برنامج <strong>Prime95</strong> واختر Small FFTs لمدة 15-30 دقيقة. راقب درجة حرارة المعالج خلالها — يجب ألا تتجاوز 80-85 درجة مئوية في معظم المعالجات. إن تجاوزت ذلك فراجع تركيب برج التبريد ومادة الحرارية.
+                        </p>
+                        <p>
+                            <strong>اختبار ضغط بطاقة الرسومات :</strong> شغّل <strong>FurMark</strong> لمدة 10-15 دقيقة وتابع درجات الحرارة. يجب أن تستقر تحت 85-90 درجة مئوية. إن انقطعت الشاشة أو ظهرت مربعات ملونة أو Artifacts، فقد تكون بطاقة الرسومات غير موصولة جيداً أو مصدر الطاقة غير كافٍ.
+                        </p>
+                        <p>
+                            <strong>اختبار سرعة SSD :</strong> شغّل <strong>CrystalDiskMark</strong> للتحقق من سرعات القراءة والكتابة الفعلية لـ SSD الخاص بك ومقارنتها بالمواصفات المعلنة من الشركة المصنعة.
+                        </p>
+                        <p>
+                            <strong>اختبار الاستقرار العام :</strong> شغّل <strong>Cinebench R23</strong> لاختبار أداء المعالج وقارنه بالأرقام المرجعية لنموذج معالجك. هذا يؤكد أن الجهاز يعمل بكامل طاقته دون أي مشكلة في التبريد أو الطاقة.
+                        </p>
+                        <p>
+                            إن اجتازت جميع الاختبارات بنجاح فحاسوبك جاهز بالكامل! يمكنك الآن تثبيت برامجك المفضلة والاستمتاع بجهازك الجديد الذي بنيته بيدك.
+                        </p>
+                    </div>
+                    <div class="tip-box">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <p>قم بعمل نسخة احتياطية لصورة النظام بعد إعداده كاملاً باستخدام <strong>Macrium Reflect</strong> — ستوفر عليك ساعات من إعادة التثبيت في حال حدوث أي مشكلة مستقبلاً.</p>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">CPU-Z</span>
+                        <span class="tool-tag">GPU-Z</span>
+                        <span class="tool-tag">HWMonitor</span>
+                        <span class="tool-tag">Prime95</span>
+                        <span class="tool-tag">FurMark</span>
+                        <span class="tool-tag">CrystalDiskMark</span>
+                        <span class="tool-tag">Cinebench R23</span>
+                        <span class="tool-tag">MSI Afterburner</span>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- fin accordion -->
+
+        <!-- SHARE -->
+        <section class="mt-16 pt-8 border-t border-slate-100 flex justify-between items-center">
+            <span class="text-sm font-bold text-slate-400 uppercase">مشاركة الدليل</span>
+            <div class="flex gap-3">
+                <a href="#" class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-black hover:text-white transition-all"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-16 border-t border-slate-100 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-right">
+            <div>
+                <div class="mb-2 flex justify-center md:justify-start">
+                    <img src="logo.png" alt="منصف تيك" class="my-custom-logo grayscale opacity-70">
+                </div>
+                <p class="text-sm text-slate-400">مصدرك الأول للتكنولوجيا في الوطن العربي.</p>
+            </div>
+            <div class="flex gap-6">
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 MONSSIF-TECH</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ══ ACCORDÉON ══ */
+        function toggleAcc(n) {
+            const item = document.querySelector(`[data-acc="${n}"]`);
+            const body = document.getElementById(`body-${n}`);
+            const isOpen = item.classList.contains('open');
+
+            document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+            document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+
+            if (!isOpen) {
+                item.classList.add('open');
+                body.classList.add('open');
+            }
+        }
+
+        /* ══ DONNÉES COMPOSANTS ══ */
+        const compData = {
+            cpu: {
+                badge: 'المعالج',
+                title: 'المعالج — CPU (Central Processing Unit)',
+                icon: 'fa-microchip',
+                text: 'المعالج هو العقل المدبّر للحاسوب. يتولى تنفيذ جميع العمليات الحسابية والمنطقية. اليوم يتنافس معالجان رئيسيان في السوق: Intel (سلسلة Core i5/i7/i9) وAMD (سلسلة Ryzen 5/7/9). عدد الأنوية وسرعة التردد هما أبرز معياري الأداء. المعالجات الحديثة تأتي بـ 8 أنوية أو أكثر، مما يجعلها مثالية لتعدد المهام والألعاب والتصميم.',
+                specs: ['Intel Core i5/i7/i9', 'AMD Ryzen 5/7/9', 'Socket LGA1700 / AM5', 'DDR4 / DDR5 Support', 'TDP: 65W – 125W', 'Multithread / Hyperthreading']
+            },
+            mb: {
+                badge: 'اللوحة الأم',
+                title: 'اللوحة الأم — Motherboard',
+                icon: 'fa-server',
+                text: 'اللوحة الأم هي العمود الفقري الذي يوصل جميع مكونات الحاسوب ببعضها. تحدد نوع المعالج الذي يمكن تركيبه، وسرعة ونوع الذاكرة المدعومة، وعدد فتحات PCIe وM.2 وUSB. توجد ثلاثة أحجام رئيسية: ATX الكاملة، Micro-ATX، وMini-ITX للأجهزة المدمجة. الشركات الأبرز: ASUS، MSI، Gigabyte، وASRock.',
+                specs: ['ATX / Micro-ATX / Mini-ITX', 'Socket CPU Compatible', 'DDR4 / DDR5 Slots', 'PCIe 4.0 / 5.0 x16', 'M.2 NVMe Slots', 'USB 3.2 / USB-C']
+            },
+            ram: {
+                badge: 'ذاكرة الوصول',
+                title: 'ذاكرة الوصول العشوائي — RAM',
+                icon: 'fa-memory',
+                text: 'الذاكرة العشوائية هي المساحة المؤقتة التي يستخدمها المعالج لتشغيل التطبيقات والبيانات النشطة. كلما زادت السعة وسرعة الذاكرة، كان الأداء أفضل. الحد الأدنى الموصى به اليوم هو 16 جيجابايت للاستخدام العادي و32 جيجابايت للألعاب والتصميم. تركيب الذاكرة في وضع Dual Channel يضاعف عرض النطاق الترددي ويحسن الأداء بشكل ملحوظ.',
+                specs: ['DDR4 3200MHz / DDR5 5600MHz', '16GB / 32GB / 64GB', 'Dual Channel Support', 'XMP / EXPO Profiles', 'CL16 / CL18 Latency', 'ECC (للخوادم)']
+            },
+            gpu: {
+                badge: 'بطاقة الرسومات',
+                title: 'بطاقة الرسومات — GPU',
+                icon: 'fa-display',
+                text: 'بطاقة الرسومات هي المسؤولة عن معالجة وعرض الصور والمقاطع المرئية. للألعاب والتصميم ثلاثي الأبعاد وتحرير الفيديو، هي أهم قطعة في الجهاز. تتنافس NVIDIA (RTX 4060/4070/4080/4090) مع AMD (RX 7600/7800 XT/7900 XTX). تأكد من أن مصدر الطاقة يكفي لتشغيلها وأن الهيكل يسع أبعادها الكبيرة.',
+                specs: ['NVIDIA RTX 4060 – 4090', 'AMD Radeon RX 7600 – 7900 XTX', 'VRAM: 8GB – 24GB GDDR6X', 'PCIe 4.0 x16', 'TDP: 115W – 450W', 'Ray Tracing / DLSS / FSR']
+            },
+            ssd: {
+                badge: 'وحدة التخزين',
+                title: 'وحدة التخزين — SSD',
+                icon: 'fa-hard-drive',
+                text: 'تعوّض SSD الأقراص الصلبة التقليدية HDD بسرعات تحميل أعلى بكثير. النوع الأسرع هو NVMe M.2 الذي يتصل مباشرة باللوحة الأم عبر فتحة M.2 ويصل سرعاته إلى 7000 ميجابايت في الثانية. الحجم الموصى به هو 1 تيرابايت على الأقل لنظام التشغيل والتطبيقات. الشركات الأبرز: Samsung (980 Pro)، WD Black (SN850)، Seagate Firecuda.',
+                specs: ['NVMe M.2 Gen4 / Gen5', 'SATA SSD 2.5"', 'Read: 3500 – 7400 MB/s', 'Write: 2500 – 6900 MB/s', '500GB / 1TB / 2TB / 4TB', 'TLC / QLC NAND Flash']
+            },
+            psu: {
+                badge: 'مصدر الطاقة',
+                title: 'مصدر الطاقة — PSU',
+                icon: 'fa-bolt',
+                text: 'مصدر الطاقة يحوّل التيار الكهربائي من الجدار إلى الجهود المناسبة لكل مكون. لا تختر مصدر طاقة رخيصاً مجهول العلامة — قد يحرق قطعك كلها في لحظة. احسب مجموع استهلاك قطعك ثم أضف 20-30٪ كهامش أمان. شهادة 80+ Bronze كحد أدنى، و80+ Gold أو Platinum للكفاءة العالية. الشركات الموصى بها: Corsair، Seasonic، Be Quiet!، EVGA.',
+                specs: ['450W / 650W / 750W / 850W+', '80+ Bronze / Gold / Platinum', 'Modular / Semi-Modular', 'ATX 3.0 (PCIe 5.0)', 'OVP / OCP / SCP Protection', 'Corsair / Seasonic / Be Quiet!']
+            },
+            cooler: {
+                badge: 'نظام التبريد',
+                title: 'نظام تبريد المعالج — CPU Cooler',
+                icon: 'fa-wind',
+                text: 'يمنع نظام التبريد المعالج من الارتفاع إلى درجات حرارة خطيرة. يوجد نوعان رئيسيان: التبريد الهوائي (برج مروحة) وهو اقتصادي وموثوق، والتبريد السائل (AIO) وهو أكثر كفاءة وجمالاً. يُرفق دائماً بالمعالج برّاد افتراضي (Stock Cooler) لكنه ضعيف للمهام الثقيلة. لا تنسَ وضع مادة التبريد الحرارية (Thermal Paste) بين المعالج والمروحة.',
+                specs: ['Air Cooler (برج هوائي)', 'AIO 120mm / 240mm / 360mm', 'Thermal Paste مطلوبة', 'TDP Support: 65W – 300W+', 'Socket Compatible', 'Noctua / Corsair iCUE / NZXT']
+            },
+            case: {
+                badge: 'هيكل الجهاز',
+                title: 'هيكل الجهاز — PC Case',
+                icon: 'fa-box-open',
+                text: 'الهيكل هو الإطار الذي يحوي جميع المكونات ويحمي الجهاز. الاختيار الصحيح يضمن تدفق هواء جيد يبرد المكونات ويطيل عمرها. تأكد أن الهيكل يناسب حجم اللوحة الأم (ATX أو Micro-ATX)، ويتسع لطول بطاقة الرسومات، ويدعم حجم مروحة التبريد السائل إن اخترته. الزجاج المقسّى الجانبي يضيف لمسة جمالية ويتيح مشاهدة المكونات.',
+                specs: ['Full Tower / Mid Tower / Mini-ITX', 'ATX / Micro-ATX Compatible', 'GPU Length: حتى 400mm', 'AIO Support: 240/360mm', 'Tempered Glass Side Panel', 'Fractal / Lian Li / NZXT / Phanteks']
+            }
+        };
+
+        /* ══ MODAL FUNCTIONS ══ */
+        function openModal(key) {
+            const d = compData[key];
+            if (!d) return;
+
+            // Image ou icône placeholder
+            document.getElementById('modal-img-wrap').innerHTML = `
+                <div class="comp-modal-img-placeholder">
+                    <i class="fa-solid ${d.icon}"></i>
+                </div>`;
+
+            document.getElementById('modal-badge').textContent  = d.badge;
+            document.getElementById('modal-title').textContent  = d.title;
+            document.getElementById('modal-text').textContent   = d.text;
+            document.getElementById('modal-specs').innerHTML    = d.specs.map(s =>
+                `<span class="comp-modal-spec">${s}</span>`).join('');
+
+            const overlay = document.getElementById('comp-modal-overlay');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(e) {
+            if (e.target === document.getElementById('comp-modal-overlay')) closeModalBtn();
+        }
+        function closeModalBtn() {
+            document.getElementById('comp-modal-overlay').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // Fermer avec Escape
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+    </script>
+
+</body>
+</html>
