@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل تركيب الحاسوب | منصف تيك</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { background-color: #ffffff; color: #0f172a; font-family: 'Cairo', sans-serif; line-height: 1.7; }
+        .nav-standard { position: fixed; top: 0; width: 100%; z-index: 100; background: white; border-bottom: 1px solid #edf2f7; }
+        .my-custom-logo { height: 54px; width: auto; object-fit: contain; }
+        .banner-img { width: 100%; height: 200px; object-fit: cover; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .step-card { display: none; animation: fadeIn 0.5s ease-out; }
+        .step-card.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .accordion-item { border-bottom: 1px solid #f1f5f9; }
+        .accordion-header { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.25rem; font-weight: 700; cursor: pointer; }
+        .accordion-content { display: none; padding: 1.25rem; background-color: #ffffff; color: #64748b; font-size: 0.95rem; line-height: 1.8; }
+        .accordion-content.active { display: block; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="antialiased pt-24">
+
+    <nav class="nav-standard">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.htm"><img src="logo.png" alt="Logo" class="my-custom-logo"></a>
+            </div>
+            <div class="hidden md:flex items-center space-x-reverse space-x-8 font-bold text-sm">
+                <a href="index.htm#news" class="hover:text-blue-600 transition-colors">الأخبار</a>
+                <a href="build-pc.html" class="text-blue-600">تركيب الحاسوب</a>
+                <a href="index.htm#buying-guide" class="hover:text-blue-600 transition-colors">دليل الشراء</a>
+                <a href="#" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">إشترك</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 mt-12 mb-24">
+        
+        <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6 font-bold uppercase tracking-widest text-right">
+            <a href="index.htm" class="hover:text-blue-600">الرئيسية</a>
+            <i class="fa-solid fa-chevron-left text-[8px]"></i>
+            <span class="text-blue-600">دليل التركيب</span>
+        </nav>
+
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-black mb-4">ابنِ وحش الألعاب الخاص بك 🎮</h1>
+            <p class="text-slate-500 text-lg mb-8">دليل تفاعلي خطوة بخطوة من الصفر حتى التشغيل.</p>
+            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2070&auto=format&fit=crop" alt="PC Hardware" class="banner-img">
+        </div>
+
+        <div class="flex justify-between mb-8 overflow-x-auto py-4 gap-4 no-scrollbar border-b border-slate-100">
+            <button onclick="showStep(1)" class="step-btn border-b-4 border-blue-600 px-4 py-2 font-bold text-blue-600 whitespace-nowrap">1. المكونات</button>
+            <button onclick="showStep(2)" class="step-btn border-b-4 border-transparent px-4 py-2 font-bold text-slate-400 hover:text-blue-600 whitespace-nowrap">2. طريقة التركيب</button>
+            <button onclick="showStep(3)" class="step-btn border-b-4 border-transparent px-4 py-2 font-bold text-slate-400 hover:text-blue-600 whitespace-nowrap">3. النظام والتعريفات</button>
+            <button onclick="showStep(4)" class="step-btn border-b-4 border-transparent px-4 py-2 font-bold text-slate-400 hover:text-blue-600 whitespace-nowrap">4. الاختبار والأداء</button>
+        </div>
+
+        <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-2xl shadow-blue-100/50 border border-slate-100 mb-12">
+            
+            <div id="step1" class="step-card active">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right">
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-microchip text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">المعالج (CPU)</h3>
+                        <p class="text-xs text-slate-500">العقل المدبر؛ يقوم بمعالجة البيانات وتنفيذ الأوامر.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-circuit-board text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">اللوحة الأم</h3>
+                        <p class="text-xs text-slate-500">المركز الذي يربط جميع قطع الحاسوب ببعضها.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-memory text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">الذاكرة (RAM)</h3>
+                        <p class="text-xs text-slate-500">مساحة العمل السريعة لتشغيل عدة برامج معاً.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-video text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">كرت الشاشة</h3>
+                        <p class="text-xs text-slate-500">المسؤول عن قوة الرسوميات والأداء في الألعاب.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-hard-drive text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">SSD</h3>
+                        <p class="text-xs text-slate-500">مكان حفظ الملفات والويندوز لسرعة إقلاع ثوانٍ.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-bolt text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">الباور سبلاي</h3>
+                        <p class="text-xs text-slate-500">توزيع الطاقة الكافية لكل قطعة بأمان.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-fan text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">المبرد</h3>
+                        <p class="text-xs text-slate-500">الحفاظ على برودة المعالج ومنع تراجع الأداء.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-500 transition-all">
+                        <i class="fa-solid fa-box-open text-blue-600 text-2xl mb-3"></i>
+                        <h3 class="font-bold mb-2">الصندوق</h3>
+                        <p class="text-xs text-slate-500">الهيكل الذي يحمي وينظم تدفق الهواء بالداخل.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step2" class="step-card">
+                <div class="rounded-2xl border border-slate-100 overflow-hidden text-right">
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>1. تركيب المعالج والرام (خارج الكيس)</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                        <div class="accordion-content active">ضع المذربورد فوق علبتها. افتح مقبس المعالج، ضعه برفق مع مطابقة المثلث الذهبي، ثم ركب الرامات في الشقوق 2 و 4.</div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>2. تركيب قرص M.2 والمبرد</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                        <div class="accordion-content">ثبت قرص الـ SSD، ثم ضع المعجون الحراري فوق المعالج وركب المبرد بإحكام.</div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>3. تثبيت المذربورد داخل الصندوق</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                        <div class="accordion-content">ركب الـ I/O Shield أولاً، ثم أنزل اللوحة الأم داخل الكيس واربط البراغي الـ 9 الأساسية.</div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>4. كرت الشاشة وتوصيل الأسلاك</span>
+                            <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                        <div class="accordion-content">ركب كرت الشاشة، وصل كابلات الطاقة (24-pin و 8-pin) وأسلاك المراوح والواجهة الأمامية.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step3" class="step-card text-right">
+                <h3 class="text-xl font-bold mb-4">النظام والتعريفات</h3>
+                <p class="text-slate-600">استخدم فلاشة USB لتثبيت ويندوز 11، وقم بتفعيل ملف XMP للرامات من البيوس.</p>
+            </div>
+            <div id="step4" class="step-card text-center">
+                <h3 class="text-xl font-bold mb-4">تم التجميع!</h3>
+                <a href="index.htm" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-xl">العودة للرئيسية</a>
+            </div>
+        </div>
+
+        <section class="mt-16 pt-8 border-t border-slate-100 flex justify-between items-center">
+            <span class="text-sm font-bold text-slate-400">مشاركة الدليل</span>
+            <div class="flex gap-3">
+                <a href="#" class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-9 h-9 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-12 bg-slate-50 border-t border-slate-100">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <img src="logo.png" alt="منصف تيك" class="my-custom-logo grayscale opacity-30 mx-auto mb-4">
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">© 2026 MONSSIF-TECH</p>
+        </div>
+    </footer>
+
+    <script>
+        function showStep(n) {
+            document.querySelectorAll('.step-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            const buttons = document.querySelectorAll('.step-btn');
+            buttons.forEach((btn, index) => {
+                if (index === n - 1) {
+                    btn.classList.add('border-blue-600', 'text-blue-600');
+                    btn.classList.remove('border-transparent', 'text-slate-400');
+                } else {
+                    btn.classList.remove('border-blue-600', 'text-blue-600');
+                    btn.classList.add('border-transparent', 'text-slate-400');
+                }
+            });
+        }
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+            document.querySelectorAll('.accordion-content').forEach(el => el.classList.remove('active'));
+            if (!isActive) content.classList.add('active');
+        }
+    </script>
+</body>
+</html>
