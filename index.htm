@@ -235,6 +235,7 @@
                     const main = result[0];
                     document.getElementById('hero-main-img').src = main.imageUrl;
                     document.getElementById('hero-main-title').innerText = main.title;
+                    document.getElementById('hero-main-title').setAttribute('dir', 'auto');
                     document.getElementById('hero-main-cat').innerText = main.category || 'أخبار الساعة';
                     document.getElementById('hero-main-link').href = `news.htm?id=${main._id}`;
 
@@ -245,7 +246,7 @@
                             <div class="absolute inset-0 bg-black/50"></div>
                             <div class="absolute bottom-6 right-6 left-6 text-white text-right">
                                 <span class="side-cat-badge">${post.category || 'تكنولوجيا'}</span>
-                                <h3 class="font-bold text-lg leading-tight">${post.title}</h3>
+                                <h3 dir="auto" class="font-bold text-lg leading-tight">${post.title}</h3>
                             </div>
                         </a>
                     `).join('');
@@ -258,7 +259,7 @@
                                     <img src="${post.imageUrl}" class="w-full h-full object-cover">
                                 </div>
                                 <span class="text-blue-600 text-[11px] font-bold uppercase mb-2 block tracking-wider">${post.category || 'تكنولوجيا'}</span>
-                                <h4 class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
+                                <h4 dir="auto" class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
                             </a>
                         </div>
                     `).join('');

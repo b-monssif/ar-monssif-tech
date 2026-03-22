@@ -159,6 +159,7 @@
 
                 if (result) {
                     document.getElementById('article-title').innerText = result.title;
+                    document.getElementById('article-title').setAttribute('dir', 'auto');
                     document.getElementById('article-title').classList.remove('italic', 'text-slate-300');
                     document.getElementById('article-badge').innerText = result.cat || 'تكنولوجيا';
                     document.getElementById('article-category').innerText = result.cat || 'تكنولوجيا';
