@@ -63,12 +63,6 @@
             display: inline-block;
             font-weight: bold;
         }
-
-        /* Fix: forcer la direction RTL sur tous les titres de news dynamiques */
-        h3[dir="rtl"], h4[dir="rtl"], h2[dir="rtl"] {
-            text-align: right;
-            unicode-bidi: plaintext;
-        }
     </style>
 </head>
 <body class="antialiased pt-24">
@@ -96,11 +90,11 @@
             <a id="hero-main-link" href="#" class="lg:col-span-2 hero-vignette h-[500px]">
                 <img id="hero-main-img" src="" class="w-full h-full object-cover">
                 <div class="absolute inset-0 text-overlay-bg"></div>
-                <div class="absolute inset-y-0 right-0 w-full md:w-2/3 flex flex-col justify-center px-10 text-right">
+                <div class="absolute inset-y-0 right-0 w-full md:w-2/3 flex flex-col justify-center px-10 text-start">
                     <span id="hero-main-cat" class="bg-blue-600 text-white font-bold rounded-full w-fit mb-6">
                         جاري التحميل...
                     </span>
-                    <h2 id="hero-main-title" dir="rtl" style="unicode-bidi: plaintext;" class="text-3xl md:text-5xl font-black text-white leading-tight">
+                    <h2 id="hero-main-title" class="text-3xl md:text-5xl font-black text-white leading-tight">
                         جاري تحميل الأخبار...
                     </h2>
                 </div>
@@ -240,31 +234,35 @@
                 if (result && result.length > 0) {
                     const main = result[0];
                     document.getElementById('hero-main-img').src = main.imageUrl;
-                    document.getElementById('hero-main-title').innerText = '\u200F' + main.title;
+                    
+                    const mainTitle = document.getElementById('hero-main-title');
+                    mainTitle.innerText = main.title;
+                    mainTitle.setAttribute('dir', 'auto');
+                    
                     document.getElementById('hero-main-cat').innerText = main.category || 'أخبار الساعة';
                     document.getElementById('hero-main-link').href = `news.htm?id=${main._id}`;
 
                     const sideGrid = document.getElementById('hero-side-grid');
                     sideGrid.innerHTML = result.slice(1, 3).map(post => `
-                        <a href="news.htm?id=${post._id}" class="hero-vignette group h-[238px] block relative">
+                        <a href="news.htm?id=${post._id}" class="hero-vignette group h-[238px] block relative text-start">
                             <img src="${post.imageUrl}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/50"></div>
-                            <div class="absolute bottom-6 right-6 left-6 text-white text-right">
+                            <div class="absolute bottom-6 right-6 left-6 text-white">
                                 <span class="side-cat-badge">${post.category || 'تكنولوجيا'}</span>
-                                <h3 dir="rtl" style="unicode-bidi: plaintext;" class="font-bold text-lg leading-tight">\u200F${post.title}</h3>
+                                <h3 dir="auto" class="font-bold text-lg leading-tight">${post.title}</h3>
                             </div>
                         </a>
                     `).join('');
 
                     const newsGrid = document.getElementById('news-grid');
                     newsGrid.innerHTML = result.slice(3).map(post => `
-                        <div class="bento-news p-4">
+                        <div class="bento-news p-4 text-start">
                             <a href="news.htm?id=${post._id}">
                                 <div class="h-40 rounded-xl bg-slate-200 mb-4 overflow-hidden">
                                     <img src="${post.imageUrl}" class="w-full h-full object-cover">
                                 </div>
                                 <span class="text-blue-600 text-[11px] font-bold uppercase mb-2 block tracking-wider">${post.category || 'تكنولوجيا'}</span>
-                                <h4 dir="rtl" style="unicode-bidi: plaintext;" class="font-bold text-slate-800 leading-snug hover:text-blue-600">\u200F${post.title}</h4>
+                                <h4 dir="auto" class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
                             </a>
                         </div>
                     `).join('');
