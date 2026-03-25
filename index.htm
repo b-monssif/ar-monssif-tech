@@ -95,8 +95,7 @@
                         جاري التحميل...
                     </span>
                     <h2 id="hero-main-title" class="text-3xl md:text-5xl font-black text-white leading-tight">
-                        جاري تحميل الأخبار...
-                    </h2>
+                        </h2>
                 </div>
             </a>
 
@@ -234,7 +233,10 @@
                 if (result && result.length > 0) {
                     const main = result[0];
                     document.getElementById('hero-main-img').src = main.imageUrl;
-                    document.getElementById('hero-main-title').innerText = main.title;
+                    
+                    // استخدام bdi لعزل النص ومنع تداخل اللغات
+                    document.getElementById('hero-main-title').innerHTML = `<bdi>${main.title}</bdi>`;
+                    
                     document.getElementById('hero-main-cat').innerText = main.category || 'أخبار الساعة';
                     document.getElementById('hero-main-link').href = `news.htm?id=${main._id}`;
 
@@ -245,20 +247,20 @@
                             <div class="absolute inset-0 bg-black/50"></div>
                             <div class="absolute bottom-6 right-6 left-6 text-white text-right">
                                 <span class="side-cat-badge">${post.category || 'تكنولوجيا'}</span>
-                                <h3 class="font-bold text-lg leading-tight">${post.title}</h3>
+                                <h3 class="font-bold text-lg leading-tight"><bdi>${post.title}</bdi></h3>
                             </div>
                         </a>
                     `).join('');
 
                     const newsGrid = document.getElementById('news-grid');
                     newsGrid.innerHTML = result.slice(3).map(post => `
-                        <div class="bento-news p-4">
+                        <div class="bento-news p-4 text-right">
                             <a href="news.htm?id=${post._id}">
                                 <div class="h-40 rounded-xl bg-slate-200 mb-4 overflow-hidden">
                                     <img src="${post.imageUrl}" class="w-full h-full object-cover">
                                 </div>
                                 <span class="text-blue-600 text-[11px] font-bold uppercase mb-2 block tracking-wider">${post.category || 'تكنولوجيا'}</span>
-                                <h4 class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
+                                <h4 class="font-bold text-slate-800 leading-snug hover:text-blue-600"><bdi>${post.title}</bdi></h4>
                             </a>
                         </div>
                     `).join('');
