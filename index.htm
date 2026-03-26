@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="scroll-smooth">
+<html lang="ar" dir="auto" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +14,6 @@
             background-color: #ffffff; 
             color: #0f172a; 
             font-family: 'Noto Sans Arabic', sans-serif;
-        }
-
-        /* SOLUTION FORCEE : On force le rendu texte pur sans interférence */
-        .fix-rtl-text {
-            direction: rtl;
-            unicode-bidi: isolate;
-            text-align: right;
-            display: block;
         }
 
         .text-overlay-bg {
@@ -98,28 +90,31 @@
             <a id="hero-main-link" href="#" class="lg:col-span-2 hero-vignette h-[500px]">
                 <img id="hero-main-img" src="" class="w-full h-full object-cover">
                 <div class="absolute inset-0 text-overlay-bg"></div>
-                <div class="absolute inset-y-0 right-0 w-full md:w-2/3 flex flex-col justify-center px-10 text-right">
+                <div class="absolute inset-y-0 right-0 w-full flex flex-col justify-center px-10 text-right">
                     <span id="hero-main-cat" class="bg-blue-600 text-white font-bold rounded-full w-fit mb-6">
                         جاري التحميل...
                     </span>
-                    <h2 id="hero-main-title" class="text-3xl md:text-5xl font-black text-white leading-tight fix-rtl-text">
+                    <h2 id="hero-main-title" dir="auto" class="text-4xl  font-black text-white leading-tight">
+                        جاري تحميل الأخبار...
                     </h2>
                 </div>
             </a>
 
-            <div id="hero-side-grid" class="grid grid-rows-2 gap-6"></div>
+            <div id="hero-side-grid" class="grid grid-rows-2 gap-6">
+                </div>
         </section>
 
         <section id="news" class="mb-24">
             <h2 class="text-2xl font-black mb-10 flex items-center gap-3">
                 <div class="w-2 h-8 bg-blue-600"></div> آخر الأخبار
             </h2>
-            <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                </div>
         </section>
 
         <section id="tutorials" class="mb-24 tutorial-section p-12">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                <div class="max-w-2xl text-right">
+                <div class="max-w-2xl">
                     <h2 class="text-3xl font-black mb-4">كيف تركب حاسوبك بنفسك؟</h2>
                     <p class="text-slate-400">دليل شامل لمساعدتك في بناء أول حاسوب احترافي من الصفر، خطوة بخطوة عبر 4 مراحل أساسية.</p>
                 </div>
@@ -129,6 +124,7 @@
                 </a>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+
                 <a href="pc-build.htm" class="bg-white/5 p-6 rounded-2xl border border-white/10 hover:border-blue-500 transition-all text-right group">
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-[10px] font-bold text-slate-500 bg-white/10 px-2 py-1 rounded-md uppercase">الخطوة 1</span>
@@ -137,7 +133,65 @@
                     <h3 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">إختيار القطع</h3>
                     <p class="text-xs text-slate-400 leading-relaxed">اختيار CPU وGPU وRAM وSSD وPSU المتوافقة مع بعضها حسب الميزانية والاستخدام.</p>
                 </a>
+
+                <a href="pc-build.htm" class="bg-white/5 p-6 rounded-2xl border border-white/10 hover:border-blue-500 transition-all text-right group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-slate-500 bg-white/10 px-2 py-1 rounded-md uppercase">الخطوة 2</span>
+                        <div class="text-2xl text-blue-500"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">التجميع الفني</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">تركيب المعالج والذاكرة وبطاقة الرسومات داخل الهيكل مع تنظيم الأسلاك باحترافية.</p>
+                </a>
+
+                <a href="pc-build.htm" class="bg-white/5 p-6 rounded-2xl border border-white/10 hover:border-blue-500 transition-all text-right group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-slate-500 bg-white/10 px-2 py-1 rounded-md uppercase">الخطوة 3</span>
+                        <div class="text-2xl text-blue-500"><i class="fa-brands fa-windows"></i></div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">تثبيت النظام</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">إعداد BIOS وتثبيت Windows عبر Bootable USB وتحديث جميع التعريفات.</p>
+                </a>
+
+                <a href="pc-build.htm" class="bg-white/5 p-6 rounded-2xl border border-white/10 hover:border-blue-500 transition-all text-right group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-[10px] font-bold text-slate-500 bg-white/10 px-2 py-1 rounded-md uppercase">الخطوة 4</span>
+                        <div class="text-2xl text-blue-500"><i class="fa-solid fa-gauge-high"></i></div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-blue-400 transition-colors">الاختبار النهائي</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">اختبار استقرار الجهاز ومراقبة الحرارة باستخدام Prime95 وFurMark وCinebench.</p>
+                </a>
+
+            </div>
+        </section>
+
+        <section id="buying-guide" class="mb-32">
+            <h2 class="text-2xl font-black mb-12 text-center">دليل الشراء حسب الفئة</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="p-8 border-t-4 border-blue-600 shadow-sm bg-white rounded-xl">
+                    <i class="fa-solid fa-laptop text-3xl text-blue-600 mb-6"></i>
+                    <h3 class="text-xl font-bold mb-6">الحواسيب</h3>
+                    <ul class="space-y-4 text-sm text-slate-600 font-medium">
+                        <li class="hover:text-blue-600 cursor-pointer">← أفضل حاسوب محمول للمطورين</li>
+                        <li class="hover:text-blue-600 cursor-pointer">← أجهزة الألعاب الاقتصادية</li>
+                    </ul>
                 </div>
+                <div class="p-8 border-t-4 border-slate-900 shadow-sm bg-white rounded-xl">
+                    <i class="fa-solid fa-tv text-3xl text-slate-900 mb-6"></i>
+                    <h3 class="text-xl font-bold mb-6">الشاشات</h3>
+                    <ul class="space-y-4 text-sm text-slate-600 font-medium">
+                        <li class="hover:text-blue-600 cursor-pointer">← أفضل شاشات فائقة الدقة</li>
+                        <li class="hover:text-blue-600 cursor-pointer">← شاشات الألعاب السريعة</li>
+                    </ul>
+                </div>
+                <div class="p-8 border-t-4 border-emerald-500 shadow-sm bg-white rounded-xl">
+                    <i class="fa-solid fa-headphones text-3xl text-emerald-500 mb-6"></i>
+                    <h3 class="text-xl font-bold mb-6">الصوتيات</h3>
+                    <ul class="space-y-4 text-sm text-slate-600 font-medium">
+                        <li class="hover:text-blue-600 cursor-pointer">← سماعات إلغاء الضوضاء</li>
+                        <li class="hover:text-blue-600 cursor-pointer">← أنظمة الصوت المنزلية</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
     </main>
@@ -150,6 +204,11 @@
                 </div>
                 <p class="text-sm text-slate-400">مصدرك الأول للتكنولوجيا في الوطن العربي.</p>
             </div>
+            <div class="flex gap-6">
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-slate-400 hover:text-blue-600 text-xl"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">© 2026 MONSSIF-TECH</p>
         </div>
     </footer>
@@ -157,11 +216,6 @@
     <script>
         const PROJECT_ID = "tb7z1hn9"; 
         const DATASET = "production";
-
-        // Cette fonction ajoute un caractère invisible (RLM) au début pour forcer l'arabe
-        function formatTitle(title) {
-            return '\u200F' + title; 
-        }
 
         async function fetchHomeNews() {
             const QUERY = encodeURIComponent(`*[_type == "post"] | order(publishedAt desc) [0...11]{
@@ -180,10 +234,8 @@
                 if (result && result.length > 0) {
                     const main = result[0];
                     document.getElementById('hero-main-img').src = main.imageUrl;
-                    
-                    // Titre principal
-                    document.getElementById('hero-main-title').innerText = formatTitle(main.title);
-                    
+                    document.getElementById('hero-main-title').innerText = main.title;
+                    document.getElementById('hero-main-title').setAttribute('dir', 'auto');
                     document.getElementById('hero-main-cat').innerText = main.category || 'أخبار الساعة';
                     document.getElementById('hero-main-link').href = `news.htm?id=${main._id}`;
 
@@ -194,20 +246,20 @@
                             <div class="absolute inset-0 bg-black/50"></div>
                             <div class="absolute bottom-6 right-6 left-6 text-white text-right">
                                 <span class="side-cat-badge">${post.category || 'تكنولوجيا'}</span>
-                                <h3 class="font-bold text-lg leading-tight fix-rtl-text">${formatTitle(post.title)}</h3>
+                                <h3 dir="auto" class="font-bold text-lg leading-tight">${post.title}</h3>
                             </div>
                         </a>
                     `).join('');
 
                     const newsGrid = document.getElementById('news-grid');
                     newsGrid.innerHTML = result.slice(3).map(post => `
-                        <div class="bento-news p-4 text-right">
+                        <div class="bento-news p-4">
                             <a href="news.htm?id=${post._id}">
                                 <div class="h-40 rounded-xl bg-slate-200 mb-4 overflow-hidden">
                                     <img src="${post.imageUrl}" class="w-full h-full object-cover">
                                 </div>
                                 <span class="text-blue-600 text-[11px] font-bold uppercase mb-2 block tracking-wider">${post.category || 'تكنولوجيا'}</span>
-                                <h4 class="font-bold text-slate-800 leading-snug hover:text-blue-600 fix-rtl-text">${formatTitle(post.title)}</h4>
+                                <h4 dir="auto" class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
                             </a>
                         </div>
                     `).join('');
