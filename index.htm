@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="scroll-smooth">
+<html lang="ar" dir="auto" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,7 +94,7 @@
                     <span id="hero-main-cat" class="bg-blue-600 text-white font-bold rounded-full w-fit mb-6">
                         جاري التحميل...
                     </span>
-                    <h2 id="hero-main-title" class="text-3xl md:text-5xl font-black text-white leading-tight">
+                    <h2 id="hero-main-title" dir="auto" class="text-3xl md:text-5xl font-black text-white leading-tight">
                         جاري تحميل الأخبار...
                     </h2>
                 </div>
@@ -235,6 +235,7 @@
                     const main = result[0];
                     document.getElementById('hero-main-img').src = main.imageUrl;
                     document.getElementById('hero-main-title').innerText = main.title;
+				    document.getElementById('hero-main-title').setAttribute('dir', 'auto');
                     document.getElementById('hero-main-cat').innerText = main.category || 'أخبار الساعة';
                     document.getElementById('hero-main-link').href = `news.htm?id=${main._id}`;
 
