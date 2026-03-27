@@ -108,7 +108,7 @@
             <h2 class="text-2xl font-black mb-10 flex items-center gap-3">
                 <div class="w-2 h-8 bg-blue-600"></div> آخر الأخبار
             </h2>
-            <div id="news-grid" dir="auto" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 </div>
         </section>
 
@@ -246,7 +246,7 @@
                             <div class="absolute inset-0 bg-black/50"></div>
                             <div class="absolute bottom-6 right-6 left-6 text-white text-right">
                                 <span class="side-cat-badge">${post.category || 'تكنولوجيا'}</span>
-                                <h3 class="font-bold text-lg leading-tight">${post.title}</h3>
+                                <h3 dir="auto" class="font-bold text-lg leading-tight">${post.title}</h3>
                             </div>
                         </a>
                     `).join('');
@@ -259,7 +259,7 @@
                                     <img src="${post.imageUrl}" class="w-full h-full object-cover">
                                 </div>
                                 <span class="text-blue-600 text-[11px] font-bold uppercase mb-2 block tracking-wider">${post.category || 'تكنولوجيا'}</span>
-                                <h4 class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
+                                <h4 dir="auto" class="font-bold text-slate-800 leading-snug hover:text-blue-600">${post.title}</h4>
                             </a>
                         </div>
                     `).join('');
